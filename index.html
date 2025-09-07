@@ -3,14 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Just Curious? 👀</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>You Clicked 👀</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.85em;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>I knew you’d click 😏</h1>
-    <p>You can run, but you can't hide.</p>
-    <p class="footer">Your visit has been recorded.</p>
+    <h1>I knew you'd click 😏</h1>
+    <p>Your visit has been logged.</p>
+    <p class="footer"> Thanks for the time.</p>
   </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js"></script>
+
+  <script>
+    // Replace this config with yours
+    const firebaseConfig = {
+  apiKey: "AIzaSyAampRCvh-FhKPEwX0F-K939VsDbzHdpi0",
+  authDomain: "insta-stalk-a43a8.firebaseapp.com",
+  databaseURL: "https://insta-stalk-a43a8-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "insta-stalk-a43a8",
+  storageBucket: "insta-stalk-a43a8.firebasestorage.app",
+  messagingSenderId: "827191367742",
+  appId: "1:827191367742:web:ca10e25f54274a7851d96f",
+  measurementId: "G-QVZ7D7LKCS"
+};
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Collect visitor data
+    const visit = {
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      isMobile: /Mobi|Android/i.test(navigator.userAgent)
+    };
+
+    // Save to Realtime DB
+    db.ref('visits').push(visit);
+  </script>
 </body>
 </html>
